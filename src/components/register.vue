@@ -6,16 +6,16 @@
                 <img src="../assets/logo.png">
             </div>
             <!-- 登录表单 -->
-            <el-form label-width="70px"  class="formBox"  :model="loginForm" :rules="loginRules" ref="loginFormRefs">
-                <el-form-item label="用户名"  prop="userName">
-                    <el-input v-model="loginForm.userName"></el-input>
+            <el-form label-width="70px"  class="formBox"  :model="registerForm" :rules="regRules">
+                <el-form-item label="用户名" prop="userName">
+                    <el-input v-model="registerForm.userName"></el-input>
                 </el-form-item>
-                <el-form-item label="密码"  prop="password">
-                    <el-input v-model="loginForm.password" type="password"></el-input>
+                <el-form-item label="密码" prop="password">
+                    <el-input v-model="registerForm.password" type="password"></el-input>
                 </el-form-item>
                 <el-form-item  class="btns">
-                    <el-button type="primary" @click="login">登录</el-button>
-                    <el-button>注册</el-button>
+                    <el-button type="primary">注册</el-button>
+                    <el-button>登录</el-button>
                 </el-form-item>
             </el-form>
 
@@ -28,13 +28,13 @@ export default {
   data () {
     return {
       //    表示一个表单数据绑定对象
-      loginForm: {
-        userName: 'ss',
-        password: 'sss'
+      registerForm: {
+        userName: '',
+        password: ''
       },
 
       //    表单的验证规则对象
-      loginRules: {
+      regRules: {
         //  验证用户名是否合法
         userName: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -46,20 +46,6 @@ export default {
           { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
         ]
       }
-    }
-  },
-  methods: {
-    login () {
-      this.$refs.loginFormRefs.validate(async valid => {
-        if (valid) {
-          //    向服务器提交用户名和密码
-          //    const {data:res} = await this.$http.post('url', this.loginForm)
-          //    if(res.meta.status !==200) {
-          //    alert('用户名或者密码错误！')
-          //    return  }
-          console.log('登录成功')
-        }
-      })
     }
   }
 }
