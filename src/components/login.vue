@@ -29,8 +29,8 @@ export default {
     return {
       //    表示一个表单数据绑定对象
       loginForm: {
-        userName: 'ss',
-        password: 'sss'
+        userName: 'admin',
+        password: 'sss123'
       },
 
       //    表单的验证规则对象
@@ -50,16 +50,18 @@ export default {
   },
   methods: {
     login () {
-      this.$refs.loginFormRefs.validate(async valid => {
-        if (valid) {
-          //    向服务器提交用户名和密码
-          //    const {data:res} = await this.$http.post('url', this.loginForm)
-          //    if(res.meta.status !==200) {
-          //    alert('用户名或者密码错误！')
-          //    return  }
-          console.log('登录成功')
-        }
-      })
+    //   this.$refs.loginFormRefs.validate(async valid => {
+    //     if (valid) {
+    //       //    向服务器提交用户名和密码
+    //           const {data:res} = await this.$http.post('url', this.loginForm)
+    //           if(res.meta.status !==200) {
+    //           alert('用户名或者密码错误！')
+    //          return  this.$message.err('登录失败')}
+    //     }
+
+      // } )
+      this.$message.success('登录成功')
+      this.$router.push('/index')
     }
   }
 }
