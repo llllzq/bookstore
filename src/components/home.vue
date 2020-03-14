@@ -14,7 +14,7 @@
         <div class="newBook">
             <!-- <input type="button" value="获取新书"> -->
             <div v-for="book in books" :key="book.id">
-                <img :src="book.pic" width="140px" height="140px">
+                <img :src="getImageUrl(book.id)" width="140px" height="140px">
                 <!-- 书籍相关信息 -->
                 <div>
                       <router-link to="/login">{{ book.name }}</router-link>
@@ -46,15 +46,17 @@ export default {
         if (response.data) {
           // console.log(response.data)
           for (var i = 0; i < response.data.length; i++) {
-            const book = response.data[i]
-            // book.picPath = book.pic
-            console.log(book.pic)
-            // console.log(book.picPath)
+            var book = response.data[i]
+            // book.pic = require('../pic/books' + book.id + '.jpg')
+            // console.log(book.pic)
             this.books.push(book)
           }
           console.log(this.books)
         }
       })
+    },
+    getImageUrl (id) {
+      return require('../pic/books/' + id + '.jpg')
     }
   },
   created () {
