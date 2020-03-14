@@ -50,28 +50,7 @@
 
             <!-- 主体 -->
             <el-main>
-                <!-- 轮播图 -->
-                <div class="block">
-                    <el-carousel height="400px">
-                    <el-carousel-item v-for="item in carouselList" :key="item.id">
-                        <img :src="item.picPath">
-                    </el-carousel-item>
-                    </el-carousel>
-                </div>
-                <!-- 新书上架 -->
-                <h3>新书上架</h3>
-                <hr>
-                <div class="newBook">
-                    <div v-for="book in books" :key="book.title">
-                        <img :src="book.pic" width="135px" height="135px">
-                        <!-- 书籍相关信息 -->
-                        <div>
-                            <router-link to="/login">{{ book.title }}</router-link>
-                            <br><span class="author">{{ book.author }} </span>
-                            <br><span class="price">{{ book.price}}</span>
-                        </div>
-                    </div>
-                </div>
+                <router-view></router-view>
             </el-main>
         </el-container>
     </el-container>
