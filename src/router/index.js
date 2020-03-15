@@ -5,6 +5,8 @@ import Login from '../components/login.vue'
 import Index from '../components/index.vue'
 import Home from '../components/home.vue'
 import Cultural from '../components/bookCategory/cultural.vue'
+import Cart from '../components/shoppingCart.vue'
+import BookDetail from '../components/bookDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -21,9 +23,11 @@ const routes = [
     children: [
       { path: '/index', redirect: '/home' },
       { path: '/home', component: Home },
-      { path: '/bookCate/cultural', component: Cultural }
+      { path: '/Category/cultural', component: Cultural }
     ]
-  }
+  },
+  { path: '/book/:id', component: BookDetail },
+  { path: '/cart', component: Cart }
 
 ]
 

@@ -5,9 +5,10 @@
             <el-row>
                   <el-col :span="6"><div class="logo">网上书城</div></el-col>
                   <el-col :span="18">
-                      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-                        <el-menu-item index="1">主页</el-menu-item>
-                        <el-menu-item index="2">购物车</el-menu-item>
+                      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
+                      :router="true" >
+                        <el-menu-item index="index">主页</el-menu-item>
+                        <el-menu-item index="cart">购物车</el-menu-item>
                         <el-menu-item index="3">我的订单</el-menu-item>
                       </el-menu>
                   </el-col>
@@ -19,8 +20,8 @@
             <el-aside width="200px">
                 <el-row class="tac">
                     <h5>分类</h5>
-                    <el-menu>
-                        <el-menu-item index="1">
+                    <el-menu :router="true">
+                        <el-menu-item index="../category/cultural">
                             <i class="el-icon-menu"></i>
                             <span slot="title">人文社科</span>
                         </el-menu-item>
@@ -67,10 +68,6 @@ export default {
         { id: 4, picPath: require('../pic/carousel/4.png') }
       ],
       books: [
-        { title: '人间失格', author: 'xxxx', price: '20.00', pic: require('../pic/books/1.jpg') },
-        { title: '活着', author: '余华', price: '20.00', pic: require('../pic/books/2.jpg') },
-        { title: '追风筝的人', author: 'xxxx', price: '20.00', pic: require('../pic/books/5.jpg') },
-        { title: '朝花夕拾', author: '鲁迅', price: '20.00', pic: require('../pic/books/4.jpg') }
       ]
     }
   }
@@ -81,10 +78,11 @@ export default {
 .logo {
     text-align: center;
     line-height: 60px;
+    border-color: #868686;
 }
 .main {
-    width: 75%;
     margin: auto;
+    width: 80%;
 }
 
 .el-header {

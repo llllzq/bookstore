@@ -17,8 +17,8 @@
                 <img :src="getImageUrl(book.id)" width="140px" height="140px">
                 <!-- 书籍相关信息 -->
                 <div>
-                      <router-link to="/login">{{ book.name }}</router-link>
-                      <br><span class="author">{{ book.author }} </span>
+                      <li @click="getBookUrl(book.id)" >{{ book.name }} </li>
+                      <span class="author">{{ book.author }} </span>
                       <br><span class="price">{{ book.price}}</span>
                 </div>
             </div>
@@ -44,19 +44,23 @@ export default {
     getBooks () {
       axios.get('/api/book').then(response => {
         if (response.data) {
-          // console.log(response.data)
           for (var i = 0; i < response.data.length; i++) {
             var book = response.data[i]
-            // book.pic = require('../pic/books' + book.id + '.jpg')
-            // console.log(book.pic)
             this.books.push(book)
           }
           console.log(this.books)
         }
       })
     },
+    // 获取图片路径
     getImageUrl (id) {
       return require('../pic/books/' + id + '.jpg')
+    },
+    // 跳转到书本详情页
+    getBookUrl (id) {
+      // console.log(id)
+      var url = '/book/' + id
+      this.$router.push(url)
     }
   },
   created () {
@@ -76,6 +80,12 @@ export default {
    font-size: 12px;
    color: gray;
    line-height: 10px;
+}
+
+li {
+  list-style: none;
+  cursor: pointer;
+  color: rgb(82, 148, 224);
 }
 
 </style>
