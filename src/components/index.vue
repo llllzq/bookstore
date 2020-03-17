@@ -3,14 +3,20 @@
         <!-- 导航栏 -->
         <el-header>
             <el-row>
-                  <el-col :span="6"><div class="logo">网上书城</div></el-col>
-                  <el-col :span="18">
+                  <el-col :span="6">
+                      <div class="logo">网上书城</div>
+                  </el-col>
+                  <el-col :span="12">
                       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                       :router="true" >
                         <el-menu-item index="index">主页</el-menu-item>
                         <el-menu-item index="cart">购物车</el-menu-item>
                         <el-menu-item index="3">我的订单</el-menu-item>
                       </el-menu>
+                  </el-col>
+                  <el-col :span="6" class="info">
+                      <div class="infoText">{{time}},{{username}}</div>
+                      <el-button @click="logout" class="infoBtn">退出</el-button>
                   </el-col>
            </el-row>
         </el-header>
@@ -68,8 +74,39 @@ export default {
         { id: 4, picPath: require('../pic/carousel/4.png') }
       ],
       books: [
-      ]
+      ],
+      userid: 0,
+      username: '',
+      time: ''
     }
+  },
+  methods: {
+    // 获取登录用户的id,保存
+    getInfo () {
+      var name = window.sessionStorage.getItem('username')
+      var id = window.sessionStorage.getItem('id')
+      this.username = name
+      this.userid = id
+      // console.log(this.userid)
+      // console.log(this.username)
+    },
+    // 获取时间
+    getTime () {
+      var day = new Date()
+      var hour = day.getHours()
+      if (hour > 6 && hour < 12) this.time = '早上好'
+      else if (hour >= 12 && hour < 18) this.time = '下午好'
+      else this.time = '晚上好'
+    },
+    // 退出登录
+    logout () {
+      window.sessionStorage.clear()
+      this.$router.push('/login')
+    }
+  },
+  created () {
+    this.getInfo()
+    this.getTime()
   }
 }
 </script>
@@ -89,6 +126,14 @@ export default {
     width: 100%;
 }
 
+.info {
+    display: flex;
+    line-height: 60px;
+}
+.infoBtn {
+    width: 80px;
+    height: 40px;
+}
 .newBook {
     display: flex;
     flex-wrap: wrap;

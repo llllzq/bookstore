@@ -5,10 +5,9 @@
             <el-row>
                   <el-col :span="6"><div class="logo">网上书城</div></el-col>
                   <el-col :span="18">
-                      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
-                      :router="true" >
-                        <el-menu-item index="index">主页</el-menu-item>
-                        <el-menu-item index="cart">购物车</el-menu-item>
+                      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" >
+                        <el-menu-item index="1" @click="goHome">主页</el-menu-item>
+                        <el-menu-item index="2" @click="goCart">购物车</el-menu-item>
                         <el-menu-item index="3">我的订单</el-menu-item>
                       </el-menu>
                   </el-col>
@@ -34,7 +33,7 @@
                         <p>存货量：{{book.rest}}</p>
                         <p>销售量：{{book.sale}}</p>
                         <hr>
-                        <el-button type="primary" @click="add">加入购物车</el-button>
+                        <el-button type="primary" @click="cartAdd" icon="el-icon-shopping-cart-2" >加入购物车</el-button>
                     </div>
                 </div>
             </div>
@@ -83,8 +82,27 @@ export default {
       return require('../pic/books/' + id + '.jpg')
     },
     // 加入购物车
-    add () {
-
+    cartAdd () {
+      // 将对应的商品编号和用户编号发给服务器
+      var userid = window.sessionStorage.getItem('userid')
+      var data = { userId: userid, bookId: this.book.id }
+      axios.post('/api/addgoods', data).then(response => {
+        if (response.data) {
+          if (response.data.code === 200) this.$message.success('成功加入购物车')
+          // console.log('res=>', response)
+          else {
+            console.log(response.data.code)
+            alert('商品加入购物车出现错误')
+          }
+        }
+      })
+    },
+    // 返回主页
+    goHome () {
+      this.$router.push('/index')
+    },
+    goCart () {
+      this.$router.push('/cart')
     }
   },
   created () {
@@ -111,4 +129,7 @@ export default {
     width: 60%;
 }
 
+.el-button{
+  float: right;
+}
 </style>

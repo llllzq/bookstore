@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -40,18 +41,33 @@ export default {
   },
   methods: {
     login () {
-    //   this.$refs.loginFormRefs.validate(async valid => {
-    //     if (valid) {
-    //       //    向服务器提交用户名和密码
-    //           const {data:res} = await this.$http.post('url', this.loginForm)
-    //           if(res.meta.status !==200) {
-    //           alert('用户名或者密码错误！')
-    //          return  this.$message.err('登录失败')}
-    //     }
-
-      // } )
-      this.$message.success('登录成功')
-      this.$router.push('/index')
+      // this.$refs.loginFormRefs.validate(async valid => {
+      //   if (!valid) {
+      //     return
+      //   }
+      //   // 向服务器提交用户名和密码
+      //   const { data: res } = await this.$http.post('login', this.loginForm)
+      //   if (res.meta.status !== 200) {
+      //     alert('用户名或者密码错误！')
+      //     return this.$message.err('登录失败')
+      //   }
+      //   this.$message.success('登录成功')
+      //   window.sessionStorage.setItem('token', res.data.token)
+      //   this.$router.push('/index')
+      // })
+      axios.post('/api/login').then(response => {
+        if (response.data) {
+          // console.log(response.data)
+          // alert(response.data.status + ',' + response.data.code)
+          if (response.data.code !== 200) {
+            return this.$message.err('用户名或者密码错误')
+          }
+          this.$message.success('登录成功')
+          window.sessionStorage.setItem('username', response.data.username)
+          window.sessionStorage.setItem('id', response.data.id)
+          this.$router.push('/index')
+        }
+      })
     }
   }
 }

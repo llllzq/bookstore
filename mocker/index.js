@@ -1,9 +1,13 @@
-const appData = require('../data.json')
+// const appData = require('../data.json')
 
 const proxy = {
-  'GET /api/login': {
-    success: appData.login.success,
-    message: appData.login.message
+  'POST /api/login': (req, res) => {
+    res.send({
+      id: 1,
+      username: 'admin',
+      status: 'success',
+      code: 200
+    })
   },
   'GET /api/book': [{
     id: 1,
@@ -66,10 +70,16 @@ const proxy = {
     catalogue: '目录1 目录2'
   }
   ],
+  'POST /api/addgoods': (req, res) => {
+    res.send({
+      status: 'success',
+      code: 200
+    })
+  },
   'POST /api/post': (req, res) => {
     res.send({
-      status: 'error',
-      code: 403
+      status: 'success',
+      code: 200
     })
   },
   'DELETE /api/remove': (req, res) => {
@@ -77,7 +87,22 @@ const proxy = {
       status: 'ok',
       message: '删除成功！'
     })
-  }
+  },
+  // 购物车
+  'GET /api/cart': [
+    {
+      cus_id: 1, // 用户编号
+      book_id: 1, // 书编号
+      order_mount: 1, // 订购数量
+      buy: 0
+    },
+    {
+      cus_id: 1,
+      book_id: 2,
+      order_mount: 1,
+      buy: 0
+    }
+  ]
 }
 
 module.exports = proxy
