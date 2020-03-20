@@ -9,7 +9,7 @@
                   <el-col :span="12">
                       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                       :router="true" >
-                        <el-menu-item index="index">主页</el-menu-item>
+                        <el-menu-item index="index" >主页</el-menu-item>
                         <el-menu-item index="cart">购物车</el-menu-item>
                         <el-menu-item index="3">我的订单</el-menu-item>
                       </el-menu>
