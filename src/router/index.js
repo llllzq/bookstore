@@ -13,8 +13,20 @@ import Novel from '../components/bookCategory/novel.vue'
 import Cart from '../components/shoppingCart.vue'
 import BookDetail from '../components/bookDetail.vue'
 import createOrder from '../components/order/createOrder.vue'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Col,
+  Row,
+  Card
+} from 'element-ui'
 
 Vue.use(VueRouter)
+Vue.use(Breadcrumb)
+Vue.use(BreadcrumbItem)
+Vue.use(Col)
+Vue.use(Row)
+Vue.use(Card)
 
 const routes = [
   { path: '/test', component: Test },
