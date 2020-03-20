@@ -9,10 +9,10 @@ const proxy = {
       code: 200
     })
   },
+  // 新接口在最下面
   'GET /api/book': [{
     id: 1,
     name: '人间失格1',
-    // pic: '../src/pic/books/1.jpg',
     price: 25.00,
     author: '(日)太宰治',
     page: 168,
@@ -70,16 +70,13 @@ const proxy = {
     catalogue: '目录1 目录2'
   }
   ],
-  'POST /api/addgoods': (req, res) => {
+  // 在书本详情页把书加到购物车
+  'POST /purchase/add': (req, res) => {
     res.send({
-      status: 'success',
-      code: 200
-    })
-  },
-  'POST /api/post': (req, res) => {
-    res.send({
-      status: 'success',
-      code: 200
+      meta: {
+        status: 200,
+        message: 'success'
+      }
     })
   },
   'DELETE /api/remove': (req, res) => {
@@ -88,7 +85,7 @@ const proxy = {
       message: '删除成功！'
     })
   },
-  // 购物车
+  // 获取购物车
   'GET /api/cart': [
     {
       cus_id: 1, // 用户编号
@@ -102,7 +99,92 @@ const proxy = {
       order_mount: 1,
       buy: 0
     }
-  ]
+  ],
+  // 注册
+  'POST /register': (req, res) => {
+    res.send({
+      meta: {
+        status: 201,
+        message: 'success'
+      }
+    })
+  },
+  // 获取书籍的新接口
+  'GET /books': {
+    data: {
+      total: 100,
+      books: [
+        {
+          id: 1,
+          title: '计算机组成原理',
+          publisher: '机械⼯业出版社',
+          publish_date: '2018-02-28',
+          author: 'xxx',
+          price: 99.98,
+          page: 168,
+          count: 20,
+          category: '计算机',
+          content: '人间失格的内容简介',
+          author_intro: '人间失格的作者简介',
+          catalogue: '目录1 目录2',
+          comment: [{ content: '好看', customer: 'abb' },
+            { content: '好看', customer: 'ab' }]
+        },
+        {
+          id: 2,
+          title: '计算机组成原理',
+          publisher: '机械⼯业出版社',
+          publish_date: '2018-02-28',
+          author: 'xxx',
+          price: 99.98,
+          page: 168,
+          count: 20,
+          category: '计算机',
+          comment: [{ content: '好看', customer: 'abb' },
+            { content: '好看', customer: 'ab' }],
+          content: '人间失格的内容简介',
+          author_intro: '人间失格的作者简介',
+          catalogue: '目录1 目录2'
+        },
+        {
+          id: 3,
+          title: '计算机组成原理',
+          publisher: '机械⼯业出版社',
+          publish_date: '2018-02-28',
+          author: 'xxx',
+          price: 99.98,
+          page: 168,
+          count: 20,
+          category: '计算机',
+          comment: [{ content: '好看', customer: 'abb' },
+            { content: '好看', customer: 'ab' }],
+          content: '人间失格的内容简介',
+          author_intro: '人间失格的作者简介',
+          catalogue: '目录1 目录2'
+        },
+        {
+          id: 4,
+          title: '计算机组成原理',
+          publisher: '机械⼯业出版社',
+          publish_date: '2018-02-28',
+          author: 'xxx',
+          price: 99.98,
+          page: 168,
+          count: 20,
+          category: '计算机',
+          comment: [{ content: '好看', customer: 'abb' },
+            { content: '好看', customer: 'ab' }],
+          content: '人间失格的内容简介',
+          author_intro: '人间失格的作者简介',
+          catalogue: '目录1 目录2'
+        }
+      ]
+    },
+    meta: {
+      status: 200,
+      message: 'get book data succeed!'
+    }
+  }
 }
 
 module.exports = proxy

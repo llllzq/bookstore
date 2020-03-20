@@ -1,14 +1,20 @@
 <template>
             <!-- 注册表单 -->
-            <el-form label-width="70px"  class="formBox"  :model="registerForm" :rules="regRules">
-                <el-form-item label="用户名" prop="userName">
-                    <el-input v-model="registerForm.userName"></el-input>
+            <el-form label-width="70px"  class="formBox"  :model="userRegForm" :rules="regRules">
+                <el-form-item label="用户名" prop="username">
+                    <el-input v-model="userRegForm.username"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password">
-                    <el-input v-model="registerForm.password" type="password"></el-input>
+                    <el-input v-model="userRegForm.password" type="password"></el-input>
                 </el-form-item>
+                <!-- <el-form-item label="手机号" prop="telephone">
+                    <el-input v-model="userRegForm.telephone"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱" prop="email">
+                    <el-input v-model="userRegForm.email"></el-input>
+                </el-form-item> -->
                 <el-form-item  class="btns">
-                    <el-button type="primary">注册</el-button>
+                    <el-button type="primary" @click="Register">注册</el-button>
                 </el-form-item>
             </el-form>
 </template>
@@ -18,15 +24,17 @@ export default {
   data () {
     return {
       //    表示一个表单数据绑定对象
-      registerForm: {
-        userName: '',
-        password: ''
+      userRegForm: {
+        username: '',
+        password: '',
+        telephone: '',
+        email: ''
       },
 
       //    表单的验证规则对象
       regRules: {
         //  验证用户名是否合法
-        userName: [
+        username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
           { min: 3, max: 6, message: '长度在 3 到 6 个字符', trigger: 'blur' }
         ],
@@ -37,19 +45,31 @@ export default {
         ]
       }
     }
+  },
+  methods: {
+    // post注册表单
+    async Register () {
+      const { data: res } = await this.$http.post('register', this.useRegForm)
+      console.log(res)
+      if (res.meta.status === 201) {
+        this.$message.success('注册成功,请登录！')
+        // this.$router.push('/login')
+      } else {
+        this.$message.err('出现错误')
+        console.log(res)
+      }
+    }
   }
 }
 </script>
 
 <style>
-
 .formBox {
-    width: 80%;
-    position: absolute;
-    bottom: 20px;
-    left: 30px;
+  width: 80%;
+  position: absolute;
+  left: 50px;
+  bottom: 10px;
 }
-
 .btns {
     float:right;
 }

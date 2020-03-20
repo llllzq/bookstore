@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   data () {
     return {
@@ -80,9 +80,9 @@ export default {
     },
     // 获取商品列表
     getGoods () {
-      axios.get('/api/cart').then(response => {
-        console.log(response.data)
-      })
+      // axios.get('/api/cart').then(response => {
+      //   console.log(response.data)
+      // })
     },
     // 删除商品
     handleDelete (index, row) {
@@ -141,8 +141,9 @@ export default {
     },
     // 购买选中商品
     buy () {
-      var userid = window.sessionStorage.getItem('id')
-      this.$router.push('/' + userid + '/create')
+      // var userid = window.sessionStorage.getItem('id')
+      // this.$router.push('/' + userid + '/create')
+      console.log(this.multipleSelection)
     }
   },
   created () {

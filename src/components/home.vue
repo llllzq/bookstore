@@ -17,7 +17,7 @@
                 <img :src="getImageUrl(book.id)" width="140px" height="140px">
                 <!-- 书籍相关信息 -->
                 <div>
-                      <li @click="getBookUrl(book.id)" >{{ book.name }} </li>
+                      <li @click="getBookUrl(book.id)" >{{ book.title }} </li>
                       <span class="author">{{ book.author }} </span>
                       <br><span class="price">{{ book.price}}</span>
                 </div>
@@ -27,30 +27,45 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   data () {
     return {
+      // 轮播图
       carouselList: [
         { id: 1, picPath: require('../pic/carousel/1.jpg') },
         { id: 2, picPath: require('../pic/carousel/2.jpg') },
         { id: 3, picPath: require('../pic/carousel/3.png') },
         { id: 4, picPath: require('../pic/carousel/4.png') }
       ],
-      books: []
+      books: [],
+      queryInfo: {
+        query: '' // 查询参数：不为空的时候代表根据书名查找
+      }
     }
   },
   methods: {
-    getBooks () {
-      axios.get('/api/book').then(response => {
-        if (response.data) {
-          for (var i = 0; i < response.data.length; i++) {
-            var book = response.data[i]
-            this.books.push(book)
-          }
-          console.log(this.books)
-        }
-      })
+    // 获取最新上架书籍
+    async getBooks () {
+      // axios.get('/api/book').then(response => {
+      //   if (response.data) {
+      //     for (var i = 0; i < response.data.length; i++) {
+      //       var book = response.data[i]
+      //       this.books.push(book)
+      //     }
+      //     console.log(this.books)
+      //   }
+      // })
+      const { data: res } = await this.$http.get('books', { params: this.queryInfo })
+      if (res.meta.status !== 200) {
+        this.$message.err('获取失败')
+        return console.log(res)
+      }
+      // 前4本书加入最近上新，显示在主页
+      for (var i = 0; i < 4; i++) {
+        var book = res.data.books[i]
+        this.books.push(book)
+      }
     },
     // 获取图片路径
     getImageUrl (id) {
