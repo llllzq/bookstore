@@ -5,6 +5,11 @@ import Login from '../components/login.vue'
 import Index from '../components/index.vue'
 import Home from '../components/home.vue'
 import Cultural from '../components/bookCategory/cultural.vue'
+import Art from '../components/bookCategory/art.vue'
+import Child from '../components/bookCategory/child.vue'
+import Education from '../components/bookCategory/education.vue'
+import Live from '../components/bookCategory/live.vue'
+import Novel from '../components/bookCategory/novel.vue'
 import Cart from '../components/shoppingCart.vue'
 import BookDetail from '../components/bookDetail.vue'
 import createOrder from '../components/order/createOrder.vue'
@@ -24,7 +29,12 @@ const routes = [
     children: [
       { path: '/index', redirect: '/home' },
       { path: '/home', component: Home },
-      { path: '/Category/cultural', component: Cultural }
+      { path: '/Category/cultural', component: Cultural },
+      { path: '/Category/art', component: Art },
+      { path: '/Category/child', component: Child },
+      { path: '/Category/education', component: Education },
+      { path: '/Category/live', component: Live },
+      { path: '/Category/novel', component: Novel }
     ]
   },
   { path: '/book/:id', component: BookDetail },

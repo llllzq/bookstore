@@ -31,23 +31,23 @@
                             <i class="el-icon-menu"></i>
                             <span slot="title">人文社科</span>
                         </el-menu-item>
-                        <el-menu-item index="2">
+                        <el-menu-item index="../category/novel">
                             <i class="el-icon-menu"></i>
                             <span slot="title">小说</span>
                         </el-menu-item>
-                        <el-menu-item index="3">
+                        <el-menu-item index="../category/education">
                             <i class="el-icon-menu"></i>
                             <span slot="title">教育</span>
                         </el-menu-item>
-                        <el-menu-item index="4">
+                        <el-menu-item index="../category/art">
                             <i class="el-icon-menu"></i>
                             <span slot="title">文艺</span>
                         </el-menu-item>
-                        <el-menu-item index="5">
+                        <el-menu-item index="../category/live">
                             <i class="el-icon-menu"></i>
                             <span slot="title">生活</span>
                         </el-menu-item>
-                        <el-menu-item index="6">
+                        <el-menu-item index="../category/child">
                             <i class="el-icon-menu"></i>
                             <span slot="title">儿童书籍</span>
                         </el-menu-item>
