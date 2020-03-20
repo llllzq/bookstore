@@ -7,6 +7,7 @@ import Home from '../components/home.vue'
 import Cultural from '../components/bookCategory/cultural.vue'
 import Cart from '../components/shoppingCart.vue'
 import BookDetail from '../components/bookDetail.vue'
+import createOrder from '../components/order/createOrder.vue'
 
 Vue.use(VueRouter)
 
@@ -27,7 +28,8 @@ const routes = [
     ]
   },
   { path: '/book/:id', component: BookDetail },
-  { path: '/cart', component: Cart }
+  { path: '/cart', component: Cart },
+  { path: '/:id/create', component: createOrder }
 
 ]
 

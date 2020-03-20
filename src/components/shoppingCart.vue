@@ -35,13 +35,12 @@
       </el-table-column>
     </el-table>
     <br>
-    <el-button type="warning" plain class="btnTotal" size="big">{{"商品总价：" + moneyTotal}}</el-button>
-    <el-button type="primary" style="float:right">立刻购买</el-button>
+    <el-button type="warning" plain class="btnTotal">{{"商品总价：" + moneyTotal}}</el-button>
+    <el-button type="primary" style="float:right" @click="buy">立刻购买</el-button>
     </div>
 </template>
 
 <script>
-// 商品加入购物车逻辑实现：通过get请求获取用户对应的商品信息
 import axios from 'axios'
 export default {
   data () {
@@ -127,11 +126,11 @@ export default {
       this.selected(this.multipleSelection)
     },
     // 计算商品总价
-    // 返回的参数为选中行对应的对象
+    // 参数selection为选中行对应的对象
     selected (selection) {
       this.multipleSelection = selection
       this.moneyTotal = 0
-      // 此处不支持forEach循环，只能用原始方法了
+      // 此处不支持forEach循环，只能用原始方法
       for (var i = 0; i < selection.length; i++) {
         // 判断返回的值是否是字符串
         if (typeof selection[i].goodTotal === 'string') {
@@ -139,6 +138,11 @@ export default {
         }
         this.moneyTotal += selection[i].goodTotal
       }
+    },
+    // 购买选中商品
+    buy () {
+      var userid = window.sessionStorage.getItem('id')
+      this.$router.push('/' + userid + '/create')
     }
   },
   created () {

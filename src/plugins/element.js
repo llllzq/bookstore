@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import {
-  Button, Form, FormItem, Input, Message, Container, Header, Aside,
+  Button, Form, FormItem, Input, Message, MessageBox, Container, Header, Aside,
   Main, Footer, Menu, MenuItemGroup, MenuItem, Row, Col, Carousel, CarouselItem, Avatar,
-  Tabs, TabPane, TableColumn, Table, InputNumber
+  Tabs, TabPane, TableColumn, Table, InputNumber, Steps, Step
 } from 'element-ui'
 
 Vue.use(Button)
@@ -27,5 +27,8 @@ Vue.use(TabPane)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(InputNumber)
+Vue.use(Steps)
+Vue.use(Step)
 
 Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm
