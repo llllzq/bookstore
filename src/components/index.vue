@@ -11,7 +11,7 @@
                       :router="true" >
                         <el-menu-item index="index" >主页</el-menu-item>
                         <el-menu-item index="cart">购物车</el-menu-item>
-                        <el-menu-item index="3">我的订单</el-menu-item>
+                        <el-menu-item index="myorder">我的订单</el-menu-item>
                       </el-menu>
                   </el-col>
                   <el-col :span="6" class="info">
