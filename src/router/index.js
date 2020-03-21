@@ -12,7 +12,7 @@ import Live from '../components/bookCategory/live.vue'
 import Novel from '../components/bookCategory/novel.vue'
 import Cart from '../components/shoppingCart.vue'
 import BookDetail from '../components/bookDetail.vue'
-import createOrder from '../components/order/createOrder.vue'
+import MyOrder from '../components/order/myOrder.vue'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -51,7 +51,7 @@ const routes = [
   },
   { path: '/book/:id', component: BookDetail },
   { path: '/cart', component: Cart },
-  { path: '/:id/create', component: createOrder }
+  { path: '/:id/order', component: MyOrder }
 
 ]
 

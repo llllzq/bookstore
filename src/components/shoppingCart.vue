@@ -50,14 +50,16 @@ export default {
         name: 'book1',
         price: 149,
         number: 1,
-        goodTotal: 149
+        goodTotal: 149,
+        id: 1
       },
       {
         img: require('../pic/books/2.jpg'),
         name: 'book2',
         price: 29,
         number: 1,
-        goodTotal: 29
+        goodTotal: 29,
+        id: 2
       }],
       multipleSelection: [],
       num: 1,
@@ -140,10 +142,24 @@ export default {
       }
     },
     // 购买选中商品
-    buy () {
-      // var userid = window.sessionStorage.getItem('id')
-      // this.$router.push('/' + userid + '/create')
-      console.log(this.multipleSelection)
+    async buy () {
+      var userid = window.sessionStorage.getItem('id')
+      var selections = this.multipleSelection // 选中的商品数组
+      var bookList = { userid: userid, list: [] } // 提交的订单
+      for (var i = 0; i < selections.length; i++) {
+        var book = {}
+        book.id = selections[i].id
+        book.count = selections[i].number
+        bookList.list.push(book)
+      }
+      const { data: res } = await this.$http.post('purchase/commit', bookList)
+      if (res.meta.status === 200) {
+        this.$router.push('/' + userid + '/order')
+      } else {
+        this.$message.err('购买出错了！')
+        console.log(res)
+        console.log(bookList)
+      }
     }
   },
   created () {

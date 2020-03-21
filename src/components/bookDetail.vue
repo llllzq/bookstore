@@ -59,6 +59,10 @@
             <div class="book">
                 <span style="font-size:26px">评论</span>
                 <hr>
+                  <el-input type="textarea" placeholder="发表你对这本书的评价吧"
+                            v-model="textarea"  maxlength="100" show-word-limit>
+                  </el-input>
+                  <el-button type="primary" class="btnCommit" @click="commit">提交</el-button>
                 <div class="comments" v-for="item in book.comment" :key="item.customer">
                   <p>{{ item.content}}</p>
                   <p>发布者：{{ item.customer}}</p>
@@ -78,7 +82,8 @@ export default {
       queryInfo: {
         query: 0 // 查询参数：不为空的时候代表根据书名查找
       },
-      total: 0 // 书本总数
+      total: 0, // 书本总数
+      textarea: '' // 评价
     }
   },
   methods: {
@@ -133,6 +138,24 @@ export default {
         this.$message.err('出现错误')
       }
     },
+    // 提交评论
+    async commit () {
+      var userid = window.sessionStorage.getItem('id')
+      var bookid = this.$route.params.id
+      var data = { userid: userid, bookid: bookid, content: this.textarea }
+      // 限制评论不为空
+      if (this.textarea === '') return this.$message.err('评论不能为空')
+      // 发送post请求
+      const { data: res } = await this.$http.post('books/comment', data)
+      if (res.meta.status === 200) {
+        this.$message.success('发表评论成功')
+        console.log(data)
+        this.textarea = ''
+      } else {
+        console.log(res)
+        this.$message.err('评论失败')
+      }
+    },
     // 返回主页
     goHome () {
       this.$router.push('/index')
@@ -167,5 +190,10 @@ export default {
 
 .el-button{
   float: right;
+}
+
+.btnCommit {
+  margin-top: 10px;
+  padding: 7px 15px;
 }
 </style>

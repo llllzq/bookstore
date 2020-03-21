@@ -184,6 +184,22 @@ const proxy = {
       status: 200,
       message: 'get book data succeed!'
     }
+  },
+  // 提交评论
+  'POST /books/comment': {
+    data: { },
+    meta: {
+      status: 200,
+      message: 'comment success'
+    }
+  },
+  // 购物车完成购买
+  'POST /purchase/commit': {
+    data: { },
+    meta: {
+      status: 200,
+      message: 'comment success'
+    }
   }
 }
 
