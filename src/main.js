@@ -1,7 +1,13 @@
+// 项目入口文件
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
+import './assets/css/global.css'
+import axios from 'axios'
+
+Vue.prototype.$http = axios
+// axios.defaults.baseURL = ''
 
 Vue.config.productionTip = false
 
