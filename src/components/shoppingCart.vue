@@ -52,7 +52,7 @@
       <el-col :span="10"><el-input placeholder="请输入收货地址" prefix-icon="el-icon-location" v-model="address"></el-input></el-col>
       <el-col :span="6"><el-button type="primary" style="float:right" @click="buy">立刻购买</el-button></el-col>
     </el-row>
-    <el-button type="warning" plain class="btnTotal">{{"商品总价：" + moneyTotal}}</el-button>
+    <el-button type="warning" plain class="btnTotal">{{"所选商品总价：" + moneyTotal}}</el-button>
     </div>
 </template>
 
@@ -67,7 +67,12 @@ export default {
       queryInfo: {
         id: ''
       },
-      address: '' // 地址
+      address: '', // 地址
+      modifyInfo: {
+        user_id: '',
+        book_id: '',
+        count: 1
+      }
     }
   },
   methods: {
@@ -111,6 +116,10 @@ export default {
       const { data: res } = await this.$http.get('orders/?', { params: this.queryInfo })
       if (res.meta.status === 200) {
         this.tableData = res.data.books
+        // 获取每本书的小计
+        for (var i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].goodTotal = this.tableData[i].price * this.tableData[i].count
+        }
       } else {
         this.$message.err('获取购物车列表出错')
         console.log(res)
@@ -148,25 +157,38 @@ export default {
       })
     },
     // 增加数量并更新小计
-    add (addGood) {
+    async add (addGood) {
       // 输入框输入值变化时会变为字符串格式返回到js
       if (typeof addGood.count === 'string') {
         addGood.count = parseInt(addGood.count)
       }
       addGood.count += 1
-      addGood.goodTotal = (addGood.count * addGood.price).toFixed(1)
+      addGood.goodTotal = addGood.count * addGood.price
       this.selected(this.multipleSelection)
+      this.modifyInfo.user_id = window.sessionStorage.getItem('id') // 获取id
+      this.modifyInfo.book_id = addGood.book_id // 获取书id
+      this.modifyInfo.count = addGood.count // 获取新数量
+      // 发送post请求修改对应书籍数量
+      const { data: res } = await this.$http.post('orders/modify/', this.modifyInfo)
+      if (res.meta.status !== 200) console.log('修改数量失败')
     },
     // 数量减少
-    del (delGood) {
+    // delGood为对应的那一行信息
+    async del (delGood) {
       if (typeof delGood.count === 'string') {
         delGood.count = parseInt(delGood.count)
       }
       if (delGood.count > 1) {
         delGood.count -= 1
       }
-      delGood.goodTotal = (delGood.count * delGood.price).toFixed(1)
+      delGood.goodTotal = delGood.count * delGood.price
       this.selected(this.multipleSelection)
+      this.modifyInfo.user_id = window.sessionStorage.getItem('id') // 获取id
+      this.modifyInfo.book_id = delGood.book_id // 获取书id
+      this.modifyInfo.count = delGood.count // 获取新数量
+      // 发送post请求修改对应书籍数量
+      const { data: res } = await this.$http.post('orders/modify/', this.modifyInfo)
+      if (res.meta.status !== 200) console.log('修改数量失败')
     },
     // 计算商品总价
     // 参数selection为选中行对应的对象
