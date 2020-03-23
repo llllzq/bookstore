@@ -9,7 +9,7 @@
         <el-row >
             <el-col :span="9">
                 <!-- 搜索框 -->
-                <el-input placeholder="请输入内容">
+                <el-input placeholder="请输入内容" v-model="queryInfo2.query" clearable @clear="getBookList">
                 <el-button slot="append" icon="el-icon-search"></el-button>
                 </el-input>
             </el-col>
@@ -21,7 +21,7 @@
                 <!-- <div  v-for="book in booklist" :key="book.id"> -->
                   <img :src="getImageUrl(book.id)" class="image">
                   <div style="padding: 14px; text-align: center;">
-                    <li @click="getBookUrl(book.id)">{{ book.name }}</li>
+                    <li @click="getBookUrl(book.id)">{{ book.title }}</li>
                     <!-- <div class="bottom clearfix">
                     <el-button type="text" class="button">加入购物车</el-button>
                     </div> -->
@@ -34,16 +34,18 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   data () {
     return {
       // 获取书籍列表的参数对象
-      // queryInfo: {
-      //   query: '',
-      //   pagenum: 1,
-      //   pagesize: 2
-      // },
+      queryInfo: {
+        id: 4
+        // 这里重复使用了
+      },
+      queryInfo2: {
+        query: ''
+      },
       booklist: [],
       total: 0
     }
@@ -52,17 +54,31 @@ export default {
     this.getBookList()
   },
   methods: {
-    // 获取数据
-    getBookList () {
-      axios.get('/api/book').then(response => {
-        if (response.data) {
-          for (var i = 0; i < response.data.length; i++) {
-            var book = response.data[i]
-            this.booklist.push(book)
-          }
-          console.log(this.booklist)
-        }
+    async getBookList () {
+      const { data: res } = await this.$http.get('books/category', {
+        params: this.queryInfo
       })
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取失败')
+      }
+      this.booklist = res.data.books
+      console.log(res)
+      for (var i = 0; i < res.data.length; i++) {
+        var book = res.data.books[i]
+        this.booklist.push(book)
+      }
+    },
+    // 搜索书籍
+    async searchBook () {
+      const { data: res } = await this.$http.get('books', {
+        params: this.queryInfo2
+      })
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取失败')
+      }
+      this.total = res.data.total
+      this.booklist = res.data.books
+      console.log(res)
     },
     // 跳转到书本详情页
     getBookUrl (id) {
