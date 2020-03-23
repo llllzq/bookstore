@@ -12,7 +12,6 @@
         <h3>新书上架</h3>
         <hr>
         <div class="newBook">
-            <!-- <input type="button" value="获取新书"> -->
             <div v-for="book in books" :key="book.id">
                 <img :src="getImageUrl(book.id)" width="140px" height="140px">
                 <!-- 书籍相关信息 -->
@@ -27,7 +26,6 @@
 </template>
 
 <script>
-// import axios from 'axios'
 export default {
   data () {
     return {
@@ -40,27 +38,19 @@ export default {
       ],
       books: [],
       queryInfo: {
-        query: '' // 查询参数：不为空的时候代表根据书名查找
+        query: '' // 查询参数
       }
     }
   },
   methods: {
     // 获取最新上架书籍
     async getBooks () {
-      // axios.get('/api/book').then(response => {
-      //   if (response.data) {
-      //     for (var i = 0; i < response.data.length; i++) {
-      //       var book = response.data[i]
-      //       this.books.push(book)
-      //     }
-      //     console.log(this.books)
-      //   }
-      // })
       const { data: res } = await this.$http.get('books', { params: this.queryInfo })
       if (res.meta.status !== 200) {
         this.$message.err('获取失败')
         return console.log(res)
       }
+      console.log(res)
       // 前4本书加入最近上新，显示在主页
       for (var i = 0; i < 4; i++) {
         var book = res.data.books[i]
@@ -73,7 +63,6 @@ export default {
     },
     // 跳转到书本详情页
     getBookUrl (id) {
-      // console.log(id)
       var url = '/book/' + id
       this.$router.push(url)
     }
