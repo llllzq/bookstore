@@ -7,7 +7,7 @@ import './assets/css/global.css'
 import axios from 'axios'
 
 Vue.prototype.$http = axios
-// axios.defaults.baseURL = ''
+axios.defaults.baseURL = 'http://yrzhao.club:8000/api/bookstore/'
 
 Vue.config.productionTip = false
 

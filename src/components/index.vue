@@ -6,17 +6,18 @@
                   <el-col :span="6">
                       <div class="logo">网上书城</div>
                   </el-col>
-                  <el-col :span="12">
-                      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
-                      :router="true" >
-                        <el-menu-item index="index" >主页</el-menu-item>
-                        <el-menu-item index="cart">购物车</el-menu-item>
-                        <el-menu-item index="3">我的订单</el-menu-item>
+                  <el-col :span="15">
+                      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :router="true"
+                       >
+                        <el-menu-item index="1" route="Index" >主页</el-menu-item>
+                        <el-menu-item index="2" route="Cart">购物车</el-menu-item>
+                        <el-menu-item index="3" route="myOrder">我的订单</el-menu-item>
+                        <el-menu-item index="4" route="myOrder">我的信息</el-menu-item>
+                        <div class="infoText">
+                            <span style="margin-right:10px">{{time}},{{username}}</span>
+                            <el-button @click="logout" class="infoBtn">退出</el-button>
+                        </div>
                       </el-menu>
-                  </el-col>
-                  <el-col :span="6" class="info">
-                      <div class="infoText">{{time}},{{username}}</div>
-                      <el-button @click="logout" class="infoBtn">退出</el-button>
                   </el-col>
            </el-row>
         </el-header>
@@ -67,6 +68,7 @@
 export default {
   data () {
     return {
+      activeIndex: '1',
       carouselList: [
         { id: 1, picPath: require('../pic/carousel/1.jpg') },
         { id: 2, picPath: require('../pic/carousel/2.jpg') },
@@ -87,8 +89,6 @@ export default {
       var id = window.sessionStorage.getItem('id')
       this.username = name
       this.userid = id
-      // console.log(this.userid)
-      // console.log(this.username)
     },
     // 获取时间
     getTime () {
@@ -111,7 +111,7 @@ export default {
 }
 </script>
 
-<style >
+<style>
 .logo {
     text-align: center;
     line-height: 60px;
@@ -130,9 +130,11 @@ export default {
     display: flex;
     line-height: 60px;
 }
+
 .infoBtn {
-    width: 80px;
+    width: 70px;
     height: 40px;
+    margin-left: 10px;
 }
 .newBook {
     display: flex;
@@ -143,7 +145,17 @@ export default {
 .author {
    font-size: 12px;
    color: gray;
-   line-height: 10px;
 }
 
+/* 顶部导航栏 */
+.infoText {
+    position: absolute;
+    right: 10px;
+    top:50%;
+    transform: translateY(-50%);
+}
+
+.el-row {
+    position: relative;
+}
 </style>

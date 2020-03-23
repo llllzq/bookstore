@@ -51,7 +51,7 @@ const routes = [
   },
   { path: '/book/:id', component: BookDetail },
   { path: '/cart', component: Cart },
-  { path: '/:id/order', component: MyOrder }
+  { path: '/myOrder', component: MyOrder }
 
 ]
 
