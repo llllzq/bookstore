@@ -74,7 +74,8 @@ export default {
       tableData: [],
       queryInfo: {
         user_id: ''
-      }
+      },
+      user_id: ''
     }
   },
   methods: {
@@ -109,7 +110,6 @@ export default {
     // 获取历史订单
     async getHistory () {
       this.queryInfo.user_id = window.sessionStorage.getItem('id')
-      console.log(this.queryInfo)
       const { data: res } = await this.$http.get('orders/history/', { params: this.queryInfo })
       if (res.meta.status === 200) {
         this.tableData = res.data.books
