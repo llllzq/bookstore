@@ -9,24 +9,109 @@
         <el-row >
             <el-col :span="9">
                 <!-- 搜索框 -->
-                <el-input placeholder="请输入内容">
-                <el-button slot="append" icon="el-icon-search"></el-button>
+                <el-input placeholder="请输入内容" v-model="queryInfo2.query" clearable @clear="getBookList">
+                <el-button slot="append" icon="el-icon-search" @click="searchBook"></el-button>
                 </el-input>
             </el-col>
         </el-row>
         <!-- 卡片视图区 -->
-        <el-row>
-            <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
+        <el-row :gutter="1" :span="10" v-for="(o, index) in 1" :key="o" :offset="index > 0 ? 2 : 0">
+            <el-col :span="5" v-for="book in booklist" :key="book.id" offset="1">
               <el-card :body-style="{ padding: '0px' }">
-                <img src="../../pic/books/1.jpg" class="image">
-                <div style="padding: 14px;">
-                  <span>小说1</span>
-                  <div class="bottom clearfix">
-                    <el-button type="text" class="button">加入购物车</el-button>
+                <!-- <div > -->
+                  <img :src="getImageUrl(book.id)" class="image">
+                  <div style="padding: 14px; text-align: center;">
+                    <li @click="getBookUrl(book.id)">{{ book.title }}</li>
+                    <!-- <div class="bottom clearfix"> -->
+                    <!-- <el-button type="text" class="button">加入购物车</!-->
+                    <!-- </div> -->
                   </div>
-                </div>
+                <!-- </div> -->
               </el-card>
             </el-col>
           </el-row>
     </div>
 </template>
+
+<script>
+// import axios from 'axios'
+export default {
+  data () {
+    return {
+      // 获取书籍列表的参数对象
+      queryInfo: {
+        id: 1
+      },
+      queryInfo2: {
+        query: ''
+      },
+      booklist: [],
+      total: 0
+    }
+  },
+  created () {
+    this.getBookList()
+  },
+  methods: {
+    async getBookList () {
+      const { data: res } = await this.$http.get('books/category', {
+        params: this.queryInfo
+      })
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取失败')
+      }
+      this.booklist = res.data.books
+      console.log(res)
+      for (var i = 0; i < res.data.length; i++) {
+        var book = res.data.books[i]
+        this.booklist.push(book)
+      }
+    },
+    // 搜索书籍
+    async searchBook () {
+      const { data: res } = await this.$http.get('books', {
+        params: this.queryInfo2
+      })
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取失败')
+      }
+      this.total = res.data.total
+      this.booklist = res.data.books
+      console.log(res)
+    },
+    // 跳转到书本详情页
+    getBookUrl (id) {
+      // console.log(id)
+      var url = '/book/' + id
+      this.$router.push(url)
+    },
+    // 获取图片路径
+    getImageUrl (id) {
+      return require('../../pic/books/' + id + '.jpg')
+    }
+  }
+}
+</script>
+
+<style>
+  .bottom {
+    margin-top: 13px;
+    line-height: 12px;
+  }
+  .button {
+    padding: 0;
+    float: right;
+  }
+  .image {
+    width: 100%;
+    display: block;
+  }
+  .clearfix:before,
+  .clearfix:after {
+      display: table;
+      content: "";
+  }
+  .clearfix:after {
+      clear: both
+  }
+</style>
