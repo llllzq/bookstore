@@ -63,12 +63,13 @@ export default {
 .title {
   text-align: center;
   line-height: 0%;
-  font-size: 32px;
+  font-size: 30px;
 }
 
 .slogan {
   font-size: 15px;
   text-align: center;
+  margin-bottom: 15px;
 }
 
 </style>

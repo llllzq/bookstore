@@ -11,8 +11,13 @@ import Education from '../components/bookCategory/education.vue'
 import Live from '../components/bookCategory/live.vue'
 import Novel from '../components/bookCategory/novel.vue'
 import Cart from '../components/shoppingCart.vue'
+// import Myorder from '../components/myorder.vue'
 import BookDetail from '../components/bookDetail.vue'
 import MyOrder from '../components/order/myOrder.vue'
+// import createOrder from '../components/order/createOrder.vue'
+// import Unfinished from '../components/order/unfinished.vue'
+// import Finished from '../components/order/finished.vue'
+
 import {
   Breadcrumb,
   BreadcrumbItem,
